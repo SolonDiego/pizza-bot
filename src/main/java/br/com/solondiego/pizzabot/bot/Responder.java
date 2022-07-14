@@ -12,46 +12,44 @@ import java.util.logging.Logger;
 
 public class Responder extends TelegramLongPollingBot {
 
-    RegisterBot registerBot = new RegisterBot("src\\chave.txt");
-
     Logger LOGGER = Logger.getLogger(Responder.class.getName());
 
     @Override
     public String getBotUsername() {
-        return registerBot.getBotUserName();
+        return RegisterBot.BOT_USERNAME;
     }
 
     @Override
     public String getBotToken() {
-        return registerBot.getBotToken();
+        return RegisterBot.BOT_TOKEN;
     }
 
     @Override
     public synchronized void onUpdateReceived(Update update) {
 
-        try{
+        try {
 
             SendMessage response = null;
 
-            if (update.hasCallbackQuery()){
+            if (update.hasCallbackQuery()) {
                 response = new CallBackStrategy().getResponse(update);
             }
 
-            if (update.hasMessage()){
+            if (update.hasMessage()) {
                 response = new TextStrategy().getResponse(update);
             }
 
-            if(response == null){
+            if (response == null) {
                 LOGGER.log(Level.WARNING, "ERRO: O tipo de atualização não pôde ser determinado.", update);
                 return;
             }
 
             sendApiMethod(response);
 
-        }catch (TelegramApiException telegramApiException){
+        } catch (TelegramApiException telegramApiException) {
             telegramApiException.printStackTrace();
         }
 
-
     }
+
 }
