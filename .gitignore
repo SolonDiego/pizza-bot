@@ -9,6 +9,4 @@ sites/site*/public/theme/
 textpattern/
 HISTORY.txt
 README.txt
-
-# Ignore todos os arquivos de texto
-*.txt
+chave.txt
